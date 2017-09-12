@@ -152,6 +152,12 @@ public class PropertyList implements Serializable
         entry.clear();
     }
 
+    @Override
+    public String toString()
+    {
+        return "PropertyList{" + "entry=" + entry + '}';
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
         "key",
@@ -198,6 +204,12 @@ public class PropertyList implements Serializable
         public void setValue(String value)
         {
             this.value = value;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "Entry{" + "key=" + key + ", value=" + value + '}';
         }
     }
 }
