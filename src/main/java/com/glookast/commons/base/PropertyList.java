@@ -76,6 +76,32 @@ public class PropertyList implements Serializable
         add(key, value);
     }
 
+    public void add(String key, boolean... value)
+    {
+        for (boolean v : value) {
+            entry.add(new Entry(key, String.valueOf(v)));
+        }
+    }
+
+    public void put(String key, boolean... value)
+    {
+        remove(key);
+        add(key, value);
+    }
+
+    public void add(String key, double... value)
+    {
+        for (double v : value) {
+            entry.add(new Entry(key, String.valueOf(v)));
+        }
+    }
+
+    public void put(String key, double... value)
+    {
+        remove(key);
+        add(key, value);
+    }
+
     public void add(String key, UUID... value)
     {
         for (UUID v : value) {
@@ -109,7 +135,7 @@ public class PropertyList implements Serializable
         }
     }
 
-    public String getString(String key, String defaultValue)
+    public String getValue(String key, String defaultValue)
     {
         for (Entry e : entry) {
             if (Objects.equals(e.getKey(), key)) {
@@ -119,12 +145,12 @@ public class PropertyList implements Serializable
         return defaultValue;
     }
 
-    public String getString(String key)
+    public String getValue(String key)
     {
-        return getString(key, null);
+        return getValue(key, null);
     }
 
-    public int getInt(String key, int defaultValue)
+    public int getIntValue(String key, int defaultValue)
     {
         try {
             for (Entry e : entry) {
@@ -137,12 +163,12 @@ public class PropertyList implements Serializable
         return defaultValue;
     }
 
-    public int getInt(String key)
+    public int getIntValue(String key)
     {
-        return getInt(key, 0);
+        return getIntValue(key, 0);
     }
 
-    public long getLong(String key, long defaultValue)
+    public long getLongValue(String key, long defaultValue)
     {
         try {
             for (Entry e : entry) {
@@ -155,12 +181,48 @@ public class PropertyList implements Serializable
         return defaultValue;
     }
 
-    public long getLong(String key)
+    public long getLongValue(String key)
     {
-        return getLong(key, 0);
+        return getLongValue(key, 0);
     }
 
-    public UUID getUUID(String key, UUID defaultValue)
+    public boolean getBoolValue(String key, boolean defaultValue)
+    {
+        try {
+            for (Entry e : entry) {
+                if (Objects.equals(e.getKey(), key)) {
+                    return Boolean.valueOf(e.getValue());
+                }
+            }
+        } catch (Exception ex) {
+        }
+        return defaultValue;
+    }
+
+    public boolean getBoolValue(String key)
+    {
+        return getBoolValue(key, false);
+    }
+
+    public double getDoubleValue(String key, double defaultValue)
+    {
+        try {
+            for (Entry e : entry) {
+                if (Objects.equals(e.getKey(), key)) {
+                    return Double.valueOf(e.getValue());
+                }
+            }
+        } catch (Exception ex) {
+        }
+        return defaultValue;
+    }
+
+    public double getDoubleValue(String key)
+    {
+        return getDoubleValue(key, 0.0);
+    }
+
+    public UUID getUUIDValue(String key, UUID defaultValue)
     {
         try {
             for (Entry e : entry) {
@@ -173,9 +235,9 @@ public class PropertyList implements Serializable
         return defaultValue;
     }
 
-    public UUID getUUID(String key)
+    public UUID getUUIDValue(String key)
     {
-        return getUUID(key, null);
+        return getUUIDValue(key, null);
     }
 
     public List<String> getAll(String key)
