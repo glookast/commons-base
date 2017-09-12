@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -75,6 +76,19 @@ public class PropertyList implements Serializable
         add(key, value);
     }
 
+    public void add(String key, UUID... value)
+    {
+        for (UUID v : value) {
+            entry.add(new Entry(key, String.valueOf(v)));
+        }
+    }
+
+    public void put(String key, UUID... value)
+    {
+        remove(key);
+        add(key, value);
+    }
+
     public boolean containsKey(String key)
     {
         for (Entry e : entry) {
@@ -95,7 +109,7 @@ public class PropertyList implements Serializable
         }
     }
 
-    public String get(String key, String defaultValue)
+    public String getString(String key, String defaultValue)
     {
         for (Entry e : entry) {
             if (Objects.equals(e.getKey(), key)) {
@@ -105,7 +119,12 @@ public class PropertyList implements Serializable
         return defaultValue;
     }
 
-    public int get(String key, int defaultValue)
+    public String getString(String key)
+    {
+        return getString(key, null);
+    }
+
+    public int getInt(String key, int defaultValue)
     {
         try {
             for (Entry e : entry) {
@@ -118,7 +137,12 @@ public class PropertyList implements Serializable
         return defaultValue;
     }
 
-    public long get(String key, long defaultValue)
+    public int getInt(String key)
+    {
+        return getInt(key, 0);
+    }
+
+    public long getLong(String key, long defaultValue)
     {
         try {
             for (Entry e : entry) {
@@ -131,9 +155,27 @@ public class PropertyList implements Serializable
         return defaultValue;
     }
 
-    public String get(String key)
+    public long getLong(String key)
     {
-        return get(key, null);
+        return getLong(key, 0);
+    }
+
+    public UUID getUUID(String key, UUID defaultValue)
+    {
+        try {
+            for (Entry e : entry) {
+                if (Objects.equals(e.getKey(), key)) {
+                    return UUID.fromString(e.getValue());
+                }
+            }
+        } catch (Exception ex) {
+        }
+        return defaultValue;
+    }
+
+    public UUID getUUID(String key)
+    {
+        return getUUID(key, null);
     }
 
     public List<String> getAll(String key)
