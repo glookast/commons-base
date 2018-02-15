@@ -1,15 +1,11 @@
 package com.glookast.commons.base;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
+import java.util.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PropertyList", namespace = "http://base.commons.glookast.com", propOrder = {
@@ -127,7 +123,7 @@ public class PropertyList implements Serializable
 
     public void remove(String key)
     {
-        for (Iterator<Entry> it = entry.iterator(); it.hasNext();) {
+        for (Iterator<Entry> it = entry.iterator(); it.hasNext(); ) {
             Entry e = it.next();
             if (Objects.equals(e.getKey(), key)) {
                 it.remove();
@@ -262,6 +258,25 @@ public class PropertyList implements Serializable
         return "PropertyList{" + "entry=" + entry + '}';
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PropertyList that = (PropertyList) o;
+        return Objects.equals(entry, that.entry);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(entry);
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
         "key",
@@ -314,6 +329,26 @@ public class PropertyList implements Serializable
         public String toString()
         {
             return "Entry{" + "key=" + key + ", value=" + value + '}';
+        }
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Entry entry = (Entry) o;
+            return Objects.equals(key, entry.key) &&
+                   Objects.equals(value, entry.value);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(key, value);
         }
     }
 }

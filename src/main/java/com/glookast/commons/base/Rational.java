@@ -1,9 +1,10 @@
 package com.glookast.commons.base;
 
-import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Rational", namespace = "http://base.commons.glookast.com", propOrder = {
@@ -114,5 +115,25 @@ public class Rational implements Serializable
         }
 
         return "NaN";
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Rational rational = (Rational) o;
+        return numerator == rational.numerator &&
+               denominator == rational.denominator;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(numerator, denominator);
     }
 }
