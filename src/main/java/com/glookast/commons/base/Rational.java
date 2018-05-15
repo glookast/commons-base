@@ -136,4 +136,26 @@ public class Rational implements Serializable
     {
         return Objects.hash(numerator, denominator);
     }
+
+    public static Rational valueOf(String value)
+    {
+        if (value == null) {
+            throw new NullPointerException();
+        }
+
+        Throwable cause = null;
+
+        try {
+            String[] split = value.split("/");
+            if (split.length == 2) {
+                int numerator = Integer.valueOf(split[0]);
+                int denominator = Integer.valueOf(split[1]);
+                return new Rational(numerator, denominator);
+            }
+        } catch (Exception ex) {
+            cause = ex;
+        }
+
+        throw new IllegalArgumentException("'" + value + "' is not a valid Rational", cause);
+    }
 }
