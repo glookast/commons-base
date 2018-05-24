@@ -1,5 +1,7 @@
 package com.glookast.commons.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -63,6 +65,7 @@ public class Rational implements Serializable
         }
     }
 
+    @JsonIgnore
     public int getRoundedValue()
     {
         if (denominator == 0) {
@@ -71,6 +74,7 @@ public class Rational implements Serializable
         return (numerator + (denominator / 2)) / denominator;
     }
 
+    @JsonIgnore
     public double getDoubleValue()
     {
         if (denominator == 0) {
