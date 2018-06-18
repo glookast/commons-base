@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.5'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.6'
 
     testCompile "junit:junit:4.12"
 }
