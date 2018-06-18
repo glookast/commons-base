@@ -28,6 +28,12 @@ public class Rational implements Serializable
         this.denominator = denominator;
     }
 
+    public Rational(Rational rational)
+    {
+        this.numerator = rational.numerator;
+        this.denominator = rational.denominator;
+    }
+
     public int getNumerator()
     {
         return numerator;
