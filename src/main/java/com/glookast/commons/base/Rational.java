@@ -13,25 +13,26 @@ import java.util.Objects;
     "numerator",
     "denominator"
 })
-public class Rational implements Serializable
+public class Rational implements Serializable, Comparable<Rational>
 {
-    protected int numerator;
-    protected int denominator;
-
-    public Rational()
-    {
-    }
+    protected final int numerator;
+    protected final int denominator;
 
     public Rational(int numerator, int denominator)
     {
+        int divisor = gcd(numerator, denominator);
+        if (divisor != 0) {
+            numerator /= divisor;
+            denominator /= divisor;
+        }
+
         this.numerator = numerator;
         this.denominator = denominator;
     }
 
     public Rational(Rational rational)
     {
-        this.numerator = rational.numerator;
-        this.denominator = rational.denominator;
+        this(rational.numerator, rational.denominator);
     }
 
     public int getNumerator()
@@ -39,19 +40,9 @@ public class Rational implements Serializable
         return numerator;
     }
 
-    public void setNumerator(int value)
-    {
-        this.numerator = value;
-    }
-
     public int getDenominator()
     {
         return denominator;
-    }
-
-    public void setDenominator(int value)
-    {
-        this.denominator = value;
     }
 
     private int gcd(int a, int b)
@@ -60,15 +51,6 @@ public class Rational implements Serializable
             return a;
         }
         return gcd(b, a % b);
-    }
-
-    public void simplify()
-    {
-        int divisor = gcd(numerator, denominator);
-        if (divisor != 0) {
-            numerator /= divisor;
-            denominator /= divisor;
-        }
     }
 
     @JsonIgnore
@@ -89,10 +71,23 @@ public class Rational implements Serializable
         return (double) numerator / (double) denominator;
     }
 
-    public enum StringType
+    @Override
+    public int compareTo(Rational o)
     {
-        Rational,
-        Decimal
+        if (o == null) {
+            return 1;
+        }
+
+        long a = ((long) numerator) * ((long) o.denominator);
+        long b = ((long) denominator) * ((long) o.numerator);
+
+        if (a > b) {
+            return 1;
+        } else if (a < b) {
+            return -1;
+        }
+
+        return 0;
     }
 
     @Override
@@ -167,5 +162,11 @@ public class Rational implements Serializable
         }
 
         throw new IllegalArgumentException("'" + value + "' is not a valid Rational", cause);
+    }
+
+    public enum StringType
+    {
+        Rational,
+        Decimal
     }
 }

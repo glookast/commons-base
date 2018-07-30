@@ -4,6 +4,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -19,16 +23,6 @@ public class RationalTest
     }
 
     @Test
-    public void setNumerator()
-    {
-        Rational r = new Rational(30000, 1001);
-
-        r.setNumerator(60000);
-
-        assertEquals(60000, r.getNumerator());
-    }
-
-    @Test
     public void getDenominator()
     {
         Rational r = new Rational(30000, 1001);
@@ -37,26 +31,14 @@ public class RationalTest
     }
 
     @Test
-    public void setDenominator()
-    {
-        Rational r = new Rational(30000, 1001);
-
-        r.setDenominator(1000);
-
-        assertEquals(1000, r.getDenominator());
-    }
-
-    @Test
     public void simplify()
     {
         Rational r1 = new Rational(30000, 1001);
-        r1.simplify();
 
         assertEquals(30000, r1.getNumerator());
         assertEquals(1001, r1.getDenominator());
 
         Rational r2 = new Rational(25000, 1000);
-        r2.simplify();
 
         assertEquals(25, r2.getNumerator());
         assertEquals(1, r2.getDenominator());
@@ -154,5 +136,30 @@ public class RationalTest
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("is not a valid Rational");
         Rational r1 = Rational.valueOf("/34/34");
+    }
+
+    @Test
+    public void compareTo()
+    {
+        List<Rational> rationals = new ArrayList<>();
+
+        rationals.add(new Rational(16, 9));
+        rationals.add(new Rational(5, 9));
+        rationals.add(new Rational(6,11));
+        rationals.add(new Rational(4,3));
+
+        Collections.sort(rationals);
+
+        assertEquals(6, rationals.get(0).getNumerator());
+        assertEquals(11, rationals.get(0).getDenominator());
+
+        assertEquals(5, rationals.get(1).getNumerator());
+        assertEquals(9, rationals.get(1).getDenominator());
+
+        assertEquals(4, rationals.get(2).getNumerator());
+        assertEquals(3, rationals.get(2).getDenominator());
+
+        assertEquals(16, rationals.get(3).getNumerator());
+        assertEquals(9, rationals.get(3).getDenominator());
     }
 }
