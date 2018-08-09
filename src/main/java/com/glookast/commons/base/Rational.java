@@ -15,24 +15,25 @@ import java.util.Objects;
 })
 public class Rational implements Serializable, Comparable<Rational>
 {
-    protected final int numerator;
-    protected final int denominator;
+    protected int numerator;
+    protected int denominator;
+
+    public Rational()
+    {
+    }
 
     public Rational(int numerator, int denominator)
     {
-        int divisor = gcd(numerator, denominator);
-        if (divisor != 0) {
-            numerator /= divisor;
-            denominator /= divisor;
-        }
-
         this.numerator = numerator;
         this.denominator = denominator;
+        simplify();
     }
 
     public Rational(Rational rational)
     {
-        this(rational.numerator, rational.denominator);
+        this.numerator = rational.numerator;
+        this.denominator = rational.denominator;
+        simplify();
     }
 
     public int getNumerator()
@@ -40,9 +41,19 @@ public class Rational implements Serializable, Comparable<Rational>
         return numerator;
     }
 
+    public void setNumerator(int value)
+    {
+        this.numerator = value;
+    }
+
     public int getDenominator()
     {
         return denominator;
+    }
+
+    public void setDenominator(int value)
+    {
+        this.denominator = value;
     }
 
     private int gcd(int a, int b)
@@ -51,6 +62,30 @@ public class Rational implements Serializable, Comparable<Rational>
             return a;
         }
         return gcd(b, a % b);
+    }
+
+    public void simplify()
+    {
+        if (denominator < 0) {
+            numerator = -numerator;
+            denominator = -denominator;
+        }
+
+        boolean negative = numerator < 0;
+
+        if (negative) {
+            numerator = -numerator;
+        }
+
+        int divisor = gcd(numerator, denominator);
+        if (divisor != 0) {
+            numerator /= divisor;
+            denominator /= divisor;
+        }
+
+        if (negative) {
+            numerator = -numerator;
+        }
     }
 
     @JsonIgnore
@@ -93,7 +128,7 @@ public class Rational implements Serializable, Comparable<Rational>
     @Override
     public String toString()
     {
-        return toString(this, StringType.Rational);
+        return toString(this, StringType.RATIONAL);
     }
 
     public String toString(StringType stringType)
@@ -108,9 +143,9 @@ public class Rational implements Serializable, Comparable<Rational>
             int den = r.getDenominator();
 
             switch (stringType) {
-                case Rational:
+                case RATIONAL:
                     return String.format("%d/%d", num, den);
-                case Decimal:
+                case DECIMAL:
                     if (((num / den) * den) == num) {
                         return String.format("%d", num / den);
                     } else {
@@ -166,7 +201,7 @@ public class Rational implements Serializable, Comparable<Rational>
 
     public enum StringType
     {
-        Rational,
-        Decimal
+        RATIONAL,
+        DECIMAL
     }
 }
