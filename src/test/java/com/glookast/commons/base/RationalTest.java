@@ -77,13 +77,13 @@ public class RationalTest
     {
         Rational r1 = new Rational(30000, 1001);
 
-        assertEquals(r1.toString(Rational.StringType.Rational), "30000/1001");
-        assertEquals(r1.toString(Rational.StringType.Decimal), "29.97");
+        assertEquals(r1.toString(Rational.StringType.RATIONAL), "30000/1001");
+        assertEquals(r1.toString(Rational.StringType.DECIMAL), "29.97");
 
         Rational r2 = new Rational(25, 1);
 
-        assertEquals(r2.toString(Rational.StringType.Rational), "25/1");
-        assertEquals(r2.toString(Rational.StringType.Decimal), "25");
+        assertEquals(r2.toString(Rational.StringType.RATIONAL), "25/1");
+        assertEquals(r2.toString(Rational.StringType.DECIMAL), "25");
     }
 
     @Test
@@ -91,13 +91,13 @@ public class RationalTest
     {
         Rational r1 = new Rational(30000, 1001);
 
-        assertEquals(Rational.toString(r1, Rational.StringType.Rational), "30000/1001");
-        assertEquals(Rational.toString(r1, Rational.StringType.Decimal), "29.97");
+        assertEquals(Rational.toString(r1, Rational.StringType.RATIONAL), "30000/1001");
+        assertEquals(Rational.toString(r1, Rational.StringType.DECIMAL), "29.97");
 
         Rational r2 = new Rational(25, 1);
 
-        assertEquals(Rational.toString(r2, Rational.StringType.Rational), "25/1");
-        assertEquals(Rational.toString(r2, Rational.StringType.Decimal), "25");
+        assertEquals(Rational.toString(r2, Rational.StringType.RATIONAL), "25/1");
+        assertEquals(Rational.toString(r2, Rational.StringType.DECIMAL), "25");
     }
 
     @Test
@@ -145,8 +145,8 @@ public class RationalTest
 
         rationals.add(new Rational(16, 9));
         rationals.add(new Rational(5, 9));
-        rationals.add(new Rational(6,11));
-        rationals.add(new Rational(4,3));
+        rationals.add(new Rational(6, 11));
+        rationals.add(new Rational(4, 3));
 
         Collections.sort(rationals);
 
